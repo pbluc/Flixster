@@ -68,12 +68,12 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
             tvTitle = (TextView) itemView.findViewById(R.id.tvTitle);
             tvOverview = (TextView) itemView.findViewById(R.id.tvOverview);
             ivPoster = (ImageView) itemView.findViewById(R.id.ivPoster);
-            tvOverview.setMovementMethod(new ScrollingMovementMethod());
         }
 
         public void bind(Movie movie) {
             tvTitle.setText(movie.getTitle());
             tvOverview.setText(movie.getOverview());
+            tvOverview.setMovementMethod(new ScrollingMovementMethod());
 
             int placeholder;
             if(context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
