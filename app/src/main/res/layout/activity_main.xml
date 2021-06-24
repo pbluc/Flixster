@@ -6,13 +6,18 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <ImageView
+        android:id="@+id/ivTopMovie"
+        android:layout_width="match_parent"
+        android:layout_height="232dp"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvMovies"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
+        android:layout_below="@id/ivTopMovie"
         android:layout_marginStart="0dp"
-        android:layout_marginTop="0dp"/>
+        android:layout_marginTop="0dp"
+        android:background="#152640"/>
+
 </RelativeLayout>

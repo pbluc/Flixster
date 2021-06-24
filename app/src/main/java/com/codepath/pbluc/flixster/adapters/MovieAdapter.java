@@ -83,20 +83,19 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView tvTitle;
-        TextView tvOverview;
+        TextView tvRating;
         ImageView ivPoster;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             tvTitle = (TextView) itemView.findViewById(R.id.tvTitle);
-            tvOverview = (TextView) itemView.findViewById(R.id.tvOverview);
+            tvRating = (TextView) itemView.findViewById(R.id.tvRating);
             ivPoster = (ImageView) itemView.findViewById(R.id.ivPoster);
         }
 
         public void bind(Movie movie) {
             tvTitle.setText(movie.getTitle());
-            tvOverview.setText(movie.getOverview());
-            tvOverview.setMovementMethod(new ScrollingMovementMethod());
+            tvRating.setText(String.valueOf(movie.getRating()));
 
             int placeholder;
             String imageUrl;

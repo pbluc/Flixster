@@ -1,39 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+    android:layout_width="100dp"
     android:layout_height="wrap_content"
-    xmlns:tools="http://schemas.android.com/tools">
+    android:layout_marginTop="17dp"
+    android:layout_marginLeft="17dp"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <ImageView
-        android:layout_width="120dp"
-        android:layout_height="wrap_content"
+        android:layout_width="100dp"
+        android:layout_height="130dp"
         android:id="@+id/ivPoster"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_marginStart="0dp"
         android:layout_marginTop="0dp"
+        android:foregroundGravity="left"
         />
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:id="@+id/tvTitle"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="5dp"
-        android:layout_toEndOf="@id/ivPoster"
-        android:textSize="24sp"
-        android:text=""/>
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-black"
+        android:layout_below="@id/ivPoster"
+        android:layout_marginLeft="7dp"
+        android:text="Movie Title"
+        android:textColor="#FFF"
+        android:textSize="12sp" />
 
     <TextView
+        android:id="@+id/tvRating"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:maxHeight="120dp"
-        android:scrollbars="vertical"
         android:layout_below="@id/tvTitle"
-        android:id="@+id/tvOverview"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="5dp"
-        android:layout_toEndOf="@+id/ivPoster"
-        android:text=""/>
+        android:layout_marginLeft="7dp"
+        android:text="7.7"
+        android:textColor="#FFF"
+        android:textSize="10sp" />
+
+
+
 
 </RelativeLayout>

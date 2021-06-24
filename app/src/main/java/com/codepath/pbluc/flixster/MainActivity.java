@@ -1,5 +1,6 @@
 package com.codepath.pbluc.flixster;
 
+import android.media.Image;
 import android.os.Bundle;
 
 import com.codepath.asynchttpclient.AsyncHttpClient;
@@ -12,11 +13,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -37,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
     public static final String TAG = "MainActivity";
 
     RecyclerView rvMovies;
+    ImageView ivTopMovie;
 
     List<Movie> movies;
 
@@ -48,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
         movies = new ArrayList<>();
 
         rvMovies = (RecyclerView) findViewById(R.id.rvMovies);
+        ivTopMovie = (ImageView) findViewById(R.id.ivTopMovie);
 
         // Create the adapter
         MovieAdapter movieAdapter = new MovieAdapter(this, movies);
@@ -56,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
         rvMovies.setAdapter(movieAdapter);
 
         // Set a Layout Manager on the recycler view
-        rvMovies.setLayoutManager(new LinearLayoutManager(this));
+        rvMovies.setLayoutManager(new GridLayoutManager(this, 3));
 
         // Create an instance of our async HTTP client
         AsyncHttpClient client = new AsyncHttpClient();
