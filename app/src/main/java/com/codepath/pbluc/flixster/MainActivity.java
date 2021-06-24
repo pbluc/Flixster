@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
                     // As we're trying to parse our JSON, this key may not exist or there might be some other isse as we
                     // parse the data in the JSON
                     JSONArray results = jsonObject.getJSONArray("results");
-                    //Log.i(TAG, "Results: " + results.toString());
+                    Log.i(TAG, "Results: " + results.toString());
                     movies.addAll(Movie.fromJsonArray(results));
                     movieAdapter.notifyDataSetChanged();
                     //Log.i(TAG, "Movies: " + movies.toString());
