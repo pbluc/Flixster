@@ -26,7 +26,6 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.codepath.pbluc.flixster.databinding.ActivityMainBinding;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -115,6 +114,13 @@ public class MainActivity extends AppCompatActivity {
                     i.putExtra("getImgPath", topMovie.getBackdropPath());
                 }
                 startActivity(i);
+            }
+        });
+
+        ivPlayTrailer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
             }
         });
 

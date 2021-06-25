@@ -30,19 +30,22 @@ public class MovieTrailerActivity extends YouTubeBaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_trailer);
 
-        // temporary test video id -- TODO replace with movie trailer video id
+        // movie trailer video id
         final String videoId = getIntent().getStringExtra("getVideoId");
 
         // resolve the player view from the layout
         YouTubePlayerView playerView = (YouTubePlayerView) findViewById(R.id.player);
 
         // initialize with API key stored in secrets.xml
+        Log.i("YT API key", getString(R.string.youtube_api_key));
         playerView.initialize(getString(R.string.youtube_api_key), new YouTubePlayer.OnInitializedListener() {
             @Override
             public void onInitializationSuccess(YouTubePlayer.Provider provider,
                                                 YouTubePlayer youTubePlayer, boolean b) {
                 // do any work here to cue video, play video, etc.
+                // below line is to enter full screen mode.
                 youTubePlayer.cueVideo(videoId);
+                youTubePlayer.setFullscreen(true);
             }
 
             @Override

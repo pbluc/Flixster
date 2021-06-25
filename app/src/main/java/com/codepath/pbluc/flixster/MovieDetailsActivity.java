@@ -24,8 +24,6 @@ import okhttp3.Headers;
 public class MovieDetailsActivity extends AppCompatActivity {
 
     public static final String TAG = "MovieDetailsActivity";
-    public final String GET_MOVIE_VIDEOS = "https://api.themoviedb.org/3/movie/" + getIntent().getIntExtra("getMovieId", 0) +
-            "/videos?api_key=b29e48cf3c2f6318e18711f5cc1cade8&language=en-US";
     String videoId;
 
     ImageView ivPoster;
@@ -53,6 +51,9 @@ public class MovieDetailsActivity extends AppCompatActivity {
         tvOverview.setText(getIntent().getStringExtra("getOverview"));
         rbMovieRating.setRating((float) (getIntent().getDoubleExtra("getRating", 0.0) / 2));
 
+        final String GET_MOVIE_VIDEOS = "https://api.themoviedb.org/3/movie/" + getIntent().getIntExtra("getMovieId", 0) +
+                "/videos?api_key=b29e48cf3c2f6318e18711f5cc1cade8&language=en-US";
+
 
         ivBackHome.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,6 +66,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
         ivPlayTrailer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //Log.i("Trailer click", "works");
                 AsyncHttpClient client = new AsyncHttpClient();
                 client.get(GET_MOVIE_VIDEOS, new JsonHttpResponseHandler() {
                     @Override
@@ -73,6 +75,12 @@ public class MovieDetailsActivity extends AppCompatActivity {
                         try {
                             JSONArray results = jsonObject.getJSONArray("results");
                             videoId = results.getJSONObject(0).getString("key");
+
+                            Intent intent = new Intent(MovieDetailsActivity.this, MovieTrailerActivity.class);
+                            if(!videoId.equals(null) || !videoId.isEmpty() || !videoId.equals("")) {
+                                intent.putExtra("getVideoId", videoId);
+                                startActivity(intent);
+                            }
 
                         } catch (JSONException e) {
                             Log.e(TAG, "Hit json exception", e);
@@ -84,12 +92,6 @@ public class MovieDetailsActivity extends AppCompatActivity {
                         Log.d(TAG, "onFailure");
                     }
                 });
-
-                Intent i = new Intent(MovieDetailsActivity.this, MovieTrailerActivity.class);
-                if(!videoId.equals(null) || !videoId.isEmpty() || !videoId.equals("")) {
-                    i.putExtra("getVideoId", videoId);
-                    startActivity(i);
-                }
             }
         });
 
