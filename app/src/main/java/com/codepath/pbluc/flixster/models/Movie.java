@@ -9,6 +9,7 @@ import java.util.List;
 
 public class Movie {
 
+    Integer id;
     String posterPath;
     String title;
     String overview;
@@ -16,6 +17,7 @@ public class Movie {
     double rating;
 
     public Movie(JSONObject jsonObject) throws JSONException {
+        id = jsonObject.getInt("id");
         rating = jsonObject.getDouble("vote_average");
         backdropPath =jsonObject.getString("backdrop_path");
         posterPath = jsonObject.getString("poster_path");
@@ -49,5 +51,9 @@ public class Movie {
 
     public double getRating() {
         return rating;
+    }
+
+    public Integer getId() {
+        return id;
     }
 }

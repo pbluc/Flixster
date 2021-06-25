@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -11,14 +12,28 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.codepath.asynchttpclient.AsyncHttpClient;
+import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import okhttp3.Headers;
 
 public class MovieDetailsActivity extends AppCompatActivity {
+
+    public static final String TAG = "MovieDetailsActivity";
+    public final String GET_MOVIE_VIDEOS = "https://api.themoviedb.org/3/movie/" + getIntent().getIntExtra("getMovieId", 0) +
+            "/videos?api_key=b29e48cf3c2f6318e18711f5cc1cade8&language=en-US";
+    String videoId;
 
     ImageView ivPoster;
     RatingBar rbMovieRating;
     TextView tvTitle;
     TextView tvOverview;
     ImageView ivBackHome;
+    ImageView ivPlayTrailer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +45,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
         tvTitle = (TextView) findViewById(R.id.tvTitle);
         tvOverview = (TextView) findViewById(R.id.tvOverview);
         ivBackHome = (ImageView) findViewById(R.id.ivBackHome);
+        ivPlayTrailer = (ImageView) findViewById(R.id.ivPlayTrailer);
 
         // Get values from previous activity
         Glide.with(this.getApplicationContext()).load(getIntent().getStringExtra("getImgPath")).into(ivPoster);
@@ -45,6 +61,39 @@ public class MovieDetailsActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
+
+        ivPlayTrailer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AsyncHttpClient client = new AsyncHttpClient();
+                client.get(GET_MOVIE_VIDEOS, new JsonHttpResponseHandler() {
+                    @Override
+                    public void onSuccess(int i, Headers headers, JSON json) {
+                        JSONObject jsonObject = json.jsonObject;
+                        try {
+                            JSONArray results = jsonObject.getJSONArray("results");
+                            videoId = results.getJSONObject(0).getString("key");
+
+                        } catch (JSONException e) {
+                            Log.e(TAG, "Hit json exception", e);
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(int i, Headers headers, String s, Throwable throwable) {
+                        Log.d(TAG, "onFailure");
+                    }
+                });
+
+                Intent i = new Intent(MovieDetailsActivity.this, MovieTrailerActivity.class);
+                if(!videoId.equals(null) || !videoId.isEmpty() || !videoId.equals("")) {
+                    i.putExtra("getVideoId", videoId);
+                    startActivity(i);
+                }
+            }
+        });
+
+
 
     }
 }

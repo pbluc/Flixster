@@ -55,15 +55,19 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
         final String getOverview = movie.getOverview();
         final double getRating = movie.getRating();
         final String getImgPath = movie.getBackdropPath();
+        final Integer getMovieId = movie.getId();
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.i("Open Details", "Works");
+
                 Intent i = new Intent(context, MovieDetailsActivity.class);
                 i.putExtra("getTitle", getTitle);
                 i.putExtra("getOverview", getOverview);
                 i.putExtra("getRating", getRating);
                 i.putExtra("getImgPath", getImgPath);
+                i.putExtra("getMovieId", getMovieId);
                 context.startActivity(i);
             }
         });
