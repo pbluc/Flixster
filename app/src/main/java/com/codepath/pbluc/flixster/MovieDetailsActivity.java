@@ -18,7 +18,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
     RatingBar rbMovieRating;
     TextView tvTitle;
     TextView tvOverview;
-    Button btnBackHome;
+    ImageView ivBackHome;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +29,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
         rbMovieRating = (RatingBar) findViewById(R.id.rbMovieRating);
         tvTitle = (TextView) findViewById(R.id.tvTitle);
         tvOverview = (TextView) findViewById(R.id.tvOverview);
-        btnBackHome = (Button) findViewById(R.id.btnBackHome);
+        ivBackHome = (ImageView) findViewById(R.id.ivBackHome);
 
         // Get values from previous activity
         Glide.with(this.getApplicationContext()).load(getIntent().getStringExtra("getImgPath")).into(ivPoster);
@@ -38,7 +38,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
         rbMovieRating.setRating((float) (getIntent().getDoubleExtra("getRating", 0.0) / 2));
 
 
-        btnBackHome.setOnClickListener(new View.OnClickListener() {
+        ivBackHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(MovieDetailsActivity.this, MainActivity.class);

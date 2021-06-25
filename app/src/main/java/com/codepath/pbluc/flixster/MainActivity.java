@@ -1,8 +1,11 @@
 package com.codepath.pbluc.flixster;
 
+import android.content.Intent;
+import android.content.res.Configuration;
 import android.media.Image;
 import android.os.Bundle;
 
+import com.bumptech.glide.Glide;
 import com.codepath.asynchttpclient.AsyncHttpClient;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 import com.codepath.pbluc.flixster.adapters.MovieAdapter;
@@ -41,8 +44,11 @@ public class MainActivity extends AppCompatActivity {
 
     RecyclerView rvMovies;
     ImageView ivTopMovie;
+    ImageView ivPlayTrailer;
+    ImageView ivMovieInfo;
 
     List<Movie> movies;
+    Movie topMovie;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +59,8 @@ public class MainActivity extends AppCompatActivity {
 
         rvMovies = (RecyclerView) findViewById(R.id.rvMovies);
         ivTopMovie = (ImageView) findViewById(R.id.ivTopMovie);
+        ivPlayTrailer = (ImageView) findViewById(R.id.ivPlayTrailer);
+        ivMovieInfo = (ImageView) findViewById(R.id.ivMovieInfo);
 
         // Create the adapter
         MovieAdapter movieAdapter = new MovieAdapter(this, movies);
@@ -77,8 +85,9 @@ public class MainActivity extends AppCompatActivity {
                     // As we're trying to parse our JSON, this key may not exist or there might be some other isse as we
                     // parse the data in the JSON
                     JSONArray results = jsonObject.getJSONArray("results");
-                    Log.i(TAG, "Results: " + results.toString());
+                    //Log.i(TAG, "Results: " + results.toString());
                     movies.addAll(Movie.fromJsonArray(results));
+                    topMovie = movies.get(0);
                     movieAdapter.notifyDataSetChanged();
                     //Log.i(TAG, "Movies: " + movies.toString());
                 } catch (JSONException e) {
@@ -91,6 +100,24 @@ public class MainActivity extends AppCompatActivity {
                 Log.d(TAG, "onFailure");
             }
         });
+
+        ivMovieInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(MainActivity.this, MovieDetailsActivity.class);
+                i.putExtra("getTitle", topMovie.getTitle());
+                i.putExtra("getOverview", topMovie.getOverview());
+                i.putExtra("getRating", topMovie.getRating());
+
+                if(getApplicationContext().getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+                    i.putExtra("getImgPath", topMovie.getPosterPath());
+                } else {
+                    i.putExtra("getImgPath", topMovie.getBackdropPath());
+                }
+                startActivity(i);
+            }
+        });
+
     }
 
 }

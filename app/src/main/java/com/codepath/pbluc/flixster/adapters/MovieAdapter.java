@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.text.method.ScrollingMovementMethod;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.codepath.pbluc.flixster.R;
 import com.codepath.pbluc.flixster.models.Movie;
 import com.codepath.pbluc.flixster.MovieDetailsActivity;
@@ -52,14 +54,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
         final String getTitle = movie.getTitle();
         final String getOverview = movie.getOverview();
         final double getRating = movie.getRating();
-        final String getImgPath;
-
-        // get either backdropPath or posterPath
-        if(context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
-            getImgPath = movie.getPosterPath();
-        } else {
-            getImgPath = movie.getBackdropPath();
-        }
+        final String getImgPath = movie.getBackdropPath();
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -110,6 +105,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
             Glide.with(context)
                     .load(imageUrl)
                     .placeholder(placeholder)
+                    .transform(new RoundedCorners(25))
                     .into(ivPoster);
         }
     }
