@@ -36,7 +36,7 @@ GIF created with [Kap](https://getkap.co/).
 
 ## Notes
 
-Describe any challenges encountered while building the app.
+Getting the GIF I recorded using Kap to upload into Github was extremely time-consuming, difficult and stressful due to the fact that Kap produced too large of a GIF file and any of the compressing tools I came across couldn't even begin to start compressing a file that large.
 
 ## Open-source libraries used
 
