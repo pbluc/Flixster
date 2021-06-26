@@ -38,7 +38,7 @@ import okhttp3.Headers;
 
 public class MainActivity extends AppCompatActivity {
 
-    public static final String NOW_PLAYING_URL = "https://api.themoviedb.org/3/movie/now_playing?api_key=b29e48cf3c2f6318e18711f5cc1cade8";
+    public final String NOW_PLAYING_URL = "https://api.themoviedb.org/3/movie/now_playing?api_key=b29e48cf3c2f6318e18711f5cc1cade8";
     public static final String TAG = "MainActivity";
 
     RecyclerView rvMovies;
@@ -109,9 +109,9 @@ public class MainActivity extends AppCompatActivity {
                 i.putExtra("getRating", topMovie.getRating());
 
                 if(getApplicationContext().getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
-                    i.putExtra("getImgPath", topMovie.getPosterPath());
-                } else {
                     i.putExtra("getImgPath", topMovie.getBackdropPath());
+                } else {
+                    i.putExtra("getImgPath", topMovie.getPosterPath());
                 }
                 startActivity(i);
             }
@@ -120,7 +120,33 @@ public class MainActivity extends AppCompatActivity {
         ivPlayTrailer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                final String GET_MOVIE_VIDEOS = "https://api.themoviedb.org/3/movie/" + topMovie.getId() +
+                        "/videos?api_key=b29e48cf3c2f6318e18711f5cc1cade8&language=en-US";
+                AsyncHttpClient client = new AsyncHttpClient();
+                client.get(GET_MOVIE_VIDEOS, new JsonHttpResponseHandler() {
+                    @Override
+                    public void onSuccess(int i, Headers headers, JSON json) {
+                        JSONObject jsonObject = json.jsonObject;
+                        try {
+                            JSONArray results = jsonObject.getJSONArray("results");
+                            String videoId = results.getJSONObject(0).getString("key");
 
+                            Intent intent = new Intent(MainActivity.this, MovieTrailerActivity.class);
+                            if(!videoId.equals(null) || !videoId.isEmpty() || !videoId.equals("")) {
+                                intent.putExtra("getVideoId", videoId);
+                                startActivity(intent);
+                            }
+
+                        } catch (JSONException e) {
+                            Log.e(TAG, "Hit json exception", e);
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(int i, Headers headers, String s, Throwable throwable) {
+                        Log.d(TAG, "onFailure");
+                    }
+                });
             }
         });
 

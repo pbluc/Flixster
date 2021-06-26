@@ -45,7 +45,7 @@
             android:layout_height="wrap_content"
             android:numStars="5"
             android:rating="4.5"
-            android:progressTint="#AA9902"
+            android:progressTint="#35B9C5"
             android:progressBackgroundTint="#152640"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="225dp"/>

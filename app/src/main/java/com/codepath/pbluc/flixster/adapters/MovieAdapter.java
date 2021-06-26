@@ -54,8 +54,14 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
         final String getTitle = movie.getTitle();
         final String getOverview = movie.getOverview();
         final double getRating = movie.getRating();
-        final String getImgPath = movie.getBackdropPath();
         final Integer getMovieId = movie.getId();
+
+        String getImgPath;
+        if(context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+            getImgPath = movie.getBackdropPath();
+        } else {
+            getImgPath = movie.getPosterPath();
+        }
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
